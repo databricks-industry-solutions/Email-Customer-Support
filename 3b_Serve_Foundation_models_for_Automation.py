@@ -29,7 +29,7 @@ dbutils.library.restartPython()
 
 # COMMAND ----------
 
-# MAGIC %run "./ES 0a: Intro & Config"
+# MAGIC %run ./_resources/00-setup
 
 # COMMAND ----------
 
@@ -174,3 +174,7 @@ emails_silver_with_summary = (
     .option("overwriteSchema", "true")
     .saveAsTable(config['table_emails_silver_foundationalm'])
 )
+
+# COMMAND ----------
+
+

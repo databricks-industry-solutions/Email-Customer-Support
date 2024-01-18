@@ -143,7 +143,7 @@ emails_silver_with_summary = (
 )
 
 
-Save table
+# Save table
 (
     emails_silver_with_summary
     .write
@@ -151,3 +151,7 @@ Save table
     .option("overwriteSchema", "true")
     .saveAsTable(config['table_emails_silver_externalm'])
 )
+
+# COMMAND ----------
+
+
