@@ -1,6 +1,22 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # External Models for Email Response Automation
+# MAGIC # Configure External Models for Email Response Automation
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC *Prerequisite: Make sure to run 1_Ingest_Emails_Into_Lakehouse before running this notebook.*
+# MAGIC
+# MAGIC In this notebook, we create endpoint for external model - OpenAI andsetup Langchain to define the prompt template. We are testing one of the emails using Langchain based prompts. External models are third-party models hosted outside of Databricks. Supported by Model Serving, external models allow you to streamline the usage and management of various large language model (LLM) providers, such as OpenAI and Anthropic, within an organization. For this specific problem, we have picked OpenAI.
+# MAGIC
+# MAGIC https://docs.databricks.com/en/generative-ai/external-models/index.html
+# MAGIC
+# MAGIC Key highlights for this notebook:
+# MAGIC - Use latest Machine Learning DBR for this notebook
+# MAGIC - Endpoint created in this notebook is used in the subsequent notebook for model serving
+# MAGIC - Endpoint can be viewed and validated using UI under the Serving section of Databricks pane.
+# MAGIC
+# MAGIC Please note that we are using Databricks secrets to securely store the OpenAI API key and is retrieved here to define the endpoint. We strongly recommend not to store the API token in the notebook.
 
 # COMMAND ----------
 
@@ -16,14 +32,7 @@
 
 # COMMAND ----------
 
-# MAGIC %md
-# MAGIC In this notebook, we will use External Models for automation of the email response. External models are third-party models hosted outside of Databricks. Supported by Model Serving, external models allow you to streamline the usage and management of various large language model (LLM) providers, such as OpenAI and Anthropic, within an organization. For this specific problem, we have picked OpenAI.
-# MAGIC
-# MAGIC https://docs.databricks.com/en/generative-ai/external-models/index.html
-
-# COMMAND ----------
-
-# MAGIC %run "./ES 0a: Intro & Config"
+# MAGIC %run ./_resources/00-setup
 
 # COMMAND ----------
 
@@ -107,6 +116,11 @@ llm_chain = LLMChain(prompt=prompt, llm=gateway)
 
 # MAGIC %md
 # MAGIC ## Test one of the emails with the OpenAI API
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Before calling the endpoint as part of Databricks serving pipeline, it can be tested for one of the emails as below:
 
 # COMMAND ----------
 

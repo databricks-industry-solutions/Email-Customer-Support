@@ -1,6 +1,17 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # External Models for Email Response Automation
+# MAGIC # Serve External Models for Email Response Automation
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC *Prerequisite: Make sure to run 1_Ingest_Emails_Into_Lakehouse and 2a_Configure_External_models_for_Automation before running this notebook.*
+# MAGIC
+# MAGIC In this notebook, we refer to the external model endpoint created in the notebook 2a and setup Langchain to serve the external model for Email Automation use case. 
+# MAGIC
+# MAGIC Key highlights for this notebook:
+# MAGIC - Endpoint created in the previous notebook is used here
+# MAGIC - UDF is used for model serving in this notebook. For low latency requirements, there are API based options are available.
 
 # COMMAND ----------
 
@@ -15,14 +26,7 @@
 
 # COMMAND ----------
 
-# MAGIC %md
-# MAGIC In this notebook, we will use External Models for automation of the email response. External models are third-party models hosted outside of Databricks. Supported by Model Serving, external models allow you to streamline the usage and management of various large language model (LLM) providers, such as OpenAI and Anthropic, within an organization. For this specific problem, we have picked OpenAI.
-# MAGIC
-# MAGIC https://docs.databricks.com/en/generative-ai/external-models/index.html
-
-# COMMAND ----------
-
-# MAGIC %run "./ES 0a: Intro & Config"
+# MAGIC %run ./_resources/00-setup
 
 # COMMAND ----------
 
@@ -139,23 +143,11 @@ emails_silver_with_summary = (
 )
 
 
-# Save table
-# (
-#     emails_silver_with_summary
-#     .write
-#     .mode("overwrite")
-#     .option("overwriteSchema", "true")
-#     .saveAsTable(config['table_emails_silver_externalm'])
-# )
-
-# COMMAND ----------
-
-display(emails_silver_with_summary)
-
-# COMMAND ----------
-
-display(emails_silver_with_summary)
-
-# COMMAND ----------
-
-
+Save table
+(
+    emails_silver_with_summary
+    .write
+    .mode("overwrite")
+    .option("overwriteSchema", "true")
+    .saveAsTable(config['table_emails_silver_externalm'])
+)

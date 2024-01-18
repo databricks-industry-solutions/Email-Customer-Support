@@ -15,7 +15,7 @@
 # MAGIC
 # MAGIC This solution accelerator proposes to use Large Language Models (LLMs) to automate the email response process. It involves the following key activities:
 # MAGIC
-# MAGIC <img src="https://raw.githubusercontent.com/databricks-industry-solutions/Email-Customer-Support/main/pictures/Plant_DistributionCenter_Store_Prouct_2.png" width=70%>
+# MAGIC <img src="https://github.com/databricks-industry-solutions/Email-Customer-Support/blob/d0f50886f75cd6286e6113d58960db00add75c2e/images/EmailAutomation.png" width=70%>
 # MAGIC
 # MAGIC 1. Categorization: The first step is to categorize the emails to understand the customer requests and urgency, including associated SLAs, and determine the appropriate approach for responding. Emails can be categorized as queries about the product, specific job requests, or generic emails that don't require a response.
 # MAGIC 2. Sentiment Analysis: The sentiment of the email - positive, neutral, or negative - is analyzed.
@@ -34,56 +34,11 @@
 # MAGIC %md
 # MAGIC ## Solution Design/architecture
 # MAGIC
-# MAGIC In this section, let's describe the solution design and its
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC ## Configuration Settings
+# MAGIC This section provide a high level of the architecture for this solution. 
 # MAGIC
-# MAGIC The following represent configuration settings used across various notebooks in this solution accelerator. You should read through all the notebooks to understand how the configuration settings are used before making any changes to the values below.
-
-# COMMAND ----------
-
-# DBTITLE 1,Instantiate Config Variable
-if 'config' not in locals().keys():
-  config = {}
-
-# COMMAND ----------
-
-# DBTITLE 1,Database and Volume
-config['catalog'] = 'email_summary_llm_solution'
-config['schema'] = 'email_llm'
-config['volume'] = 'source_data'
-config['vol_data_landing'] = f"/Volumes/{config['catalog']}/{config['schema']}/{config['volume']}"
-config['table_emails_bronze'] = 'emails_bronze'
-config['table_emails_silver_foundationalm'] = 'emails_foundational_silver'
-config['table_emails_silver_externalm'] = 'emails_externalm_silver'
-config['table_emails_silver'] = 'emails_silver'
-
-# COMMAND ----------
-
-# create catalog if not exists
-spark.sql('create catalog if not exists {0}'.format(config['catalog']))
-
-# set current catalog context
-spark.sql('USE CATALOG {0}'.format(config['catalog']))
-
-# create database if not exists
-spark.sql('create database if not exists {0}'.format(config['schema']))
-
-# set current datebase context
-spark.sql('USE {0}'.format(config['schema']))
-
-# COMMAND ----------
-
-# DBTITLE 1,Storage (see notebook 0b for more info)
-config['mount_point'] ='/tmp/emails_summary'
- 
-# file paths
-config['checkpoint_path'] = config['mount_point'] + '/checkpoints'
-config['schema_path'] = config['mount_point'] + '/schema'
-
-# COMMAND ----------
-
-config['openai_api_key']=dbutils.secrets.get(scope = "email_openai_secret_scope", key = "openai_api_key")
+# MAGIC <img src="https://github.com/databricks-industry-solutions/Email-Customer-Support/blob/d0f50886f75cd6286e6113d58960db00add75c2e/images/EmailAutomationArchitecture.png" width=70%>
+# MAGIC
+# MAGIC - Data Ingestion: Customer support emails are received within popular email clients such as Microsoft Outlook, GMail etc. There are multiple solutions available to ingest data from the email clients into Databricks Delta tables. A few of the commonly used solutions are Azure LogicApps or AWS Step Functions.
+# MAGIC - Model serving: Databricks Model Serving now offers a unified interface, making it easier to experiment, customize, and productionize models across all clouds and providers. This means you can create high-quality GenAI apps using the best model for your use case while securely leveraging your organization's unique data. Databricks Model Serving supports any External models, Foundation Models or custom models. In this solution, we have implemented external model interface for propriatory models like OpenAI as well as foundation models like Mistral.
+# MAGIC - Update emails: The emails are enhanced by LLM and auotomated responses including catagory, sentiment and synopsis are sent back to the inbox of the customer support application.
+# MAGIC

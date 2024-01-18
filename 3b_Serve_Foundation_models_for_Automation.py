@@ -1,6 +1,16 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # External Models for Email Response Automation
+# MAGIC # Serve Foundation Models for Email Response Automation
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC *Prerequisite: Make sure to run 1_Ingest_Emails_Into_Lakehouse before running this notebook.*
+# MAGIC
+# MAGIC In this notebook, we setup Langchain to serve the foundation model for Email Automation use case. 
+# MAGIC
+# MAGIC Key highlights for this notebook:
+# MAGIC - UDF is used for model serving in this notebook. For low latency requirements, there are API based options are available.
 
 # COMMAND ----------
 

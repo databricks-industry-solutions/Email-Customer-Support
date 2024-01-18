@@ -1,11 +1,24 @@
 # Databricks notebook source
+# MAGIC %md 
+# MAGIC #Ingest Customer Support Emails into the Bronze Delta Table 
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Customer support email application is integrated with Databricks platform. The components such as Azure LogicApps drop data into Databricks Volumes or directly ingest into Bronze Delta tables. In this notebook, we are assuming that the raw emails are dropped in to Volume and we are ingesting data into Bronze Delta Table using Autoloader. 
+# MAGIC
+# MAGIC Data used for this solution are fake emails being generated manually based on the real world emails received by electricity supplier for their business customers.
+# MAGIC
+# MAGIC As we are using Autoloader, the solution can be implemented either using batch processing or stream processing.
+
+# COMMAND ----------
+
 # MAGIC %run ./_resources/00-setup
 
 # COMMAND ----------
 
-# MAGIC %md ## Ingest customer emails into the Bronze Emails table
+# MAGIC %md ## Ingest data from Volume into Bronze Delta table
 # MAGIC
-# MAGIC Along with our customer, we have created sample emails based on the real world emails received by our electricity supplier for their business customers
 
 # COMMAND ----------
 
@@ -31,12 +44,3 @@ _ = (
       .option('checkpointLocation', f"{config['checkpoint_path']}/emails_bronze")
       .toTable(config['table_emails_bronze'])
   )
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC select * from email_summary_llm_solution.email_llm.emails_bronze
-
-# COMMAND ----------
-
-

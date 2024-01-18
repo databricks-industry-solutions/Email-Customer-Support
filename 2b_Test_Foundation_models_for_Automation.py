@@ -1,16 +1,24 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Foundation Models for Email Response Automation
+# MAGIC # Test Foundation Models for Email Response Automation
 
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC
+# MAGIC Prerequisite: Make sure to run 1_Ingest_Emails_Into_Lakehouse before running this notebook.
+# MAGIC
 # MAGIC Databricks Model Serving supports any Foundation Model, be it a fully custom model, a Databricks-managed model, or a third-party Foundation Model. This flexibility allows you to choose the right model for the right job, keeping you ahead of future advances in the range of available models. 
 # MAGIC
 # MAGIC You can get started with Foundation Model APIs on a pay-per-token basis, which significantly reduces operational costs. Alternatively, for workloads requiring fine-tuned models or performance guarantees, you can switch to Provisioned Throughput.
 # MAGIC
 # MAGIC Please refer Foundation Model API documentation for more details:
 # MAGIC https://docs.databricks.com/en/machine-learning/foundation-models/index.html?_gl=1*licvcu*_gcl_au*ODA1MDc0NDEzLjE3MDMzMjEzNDk
+# MAGIC
+# MAGIC
+# MAGIC Key highlights for this notebook:
+# MAGIC - Note that Foundation model endpoint are already available in Databricks Serving and it is not required to be configured
+# MAGIC - We analysed multiple foundation models and Mistral is providing better results for the email automation in our case. However any foundation model can be used based on your preference and uniqueness of your data
 
 # COMMAND ----------
 
@@ -29,7 +37,7 @@ dbutils.library.restartPython()
 
 # COMMAND ----------
 
-# MAGIC %run "./ES 0a: Intro & Config"
+# MAGIC %run ./_resources/00-setup
 
 # COMMAND ----------
 
