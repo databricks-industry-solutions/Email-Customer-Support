@@ -15,7 +15,7 @@
 # MAGIC
 # MAGIC This solution accelerator proposes to use Large Language Models (LLMs) to automate the email response process. It involves the following key activities:
 # MAGIC
-# MAGIC <img src="https://github.com/databricks-industry-solutions/Email-Customer-Support/blob/d0f50886f75cd6286e6113d58960db00add75c2e/images/EmailAutomation.png" width=70%>
+# MAGIC <img src="https://raw.githubusercontent.com/sachinpatilb/ImageRepo/main/EmailAutomation.png" width=70%>
 # MAGIC
 # MAGIC 1. Categorization: The first step is to categorize the emails to understand the customer requests and urgency, including associated SLAs, and determine the appropriate approach for responding. Emails can be categorized as queries about the product, specific job requests, or generic emails that don't require a response.
 # MAGIC 2. Sentiment Analysis: The sentiment of the email - positive, neutral, or negative - is analyzed.
@@ -36,7 +36,7 @@
 # MAGIC
 # MAGIC This section provide a high level of the architecture for this solution. 
 # MAGIC
-# MAGIC <img src="https://github.com/databricks-industry-solutions/Email-Customer-Support/blob/d0f50886f75cd6286e6113d58960db00add75c2e/images/EmailAutomationArchitecture.png" width=70%>
+# MAGIC <img src="https://github.com/sachinpatilb/ImageRepo/blob/main/EmailAutomationArchitecture.png?raw=true" width=70%>
 # MAGIC
 # MAGIC - Data Ingestion: Customer support emails are received within popular email clients such as Microsoft Outlook, GMail etc. There are multiple solutions available to ingest data from the email clients into Databricks Delta tables. A few of the commonly used solutions are Azure LogicApps or AWS Step Functions.
 # MAGIC - Model serving: Databricks Model Serving now offers a unified interface, making it easier to experiment, customize, and productionize models across all clouds and providers. This means you can create high-quality GenAI apps using the best model for your use case while securely leveraging your organization's unique data. Databricks Model Serving supports any External models, Foundation Models or custom models. In this solution, we have implemented external model interface for propriatory models like OpenAI as well as foundation models like Mistral.

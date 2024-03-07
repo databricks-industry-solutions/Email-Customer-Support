@@ -7,7 +7,7 @@
 # MAGIC %md
 # MAGIC *Prerequisite: Make sure to run 1_Ingest_Emails_Into_Lakehouse before running this notebook.*
 # MAGIC
-# MAGIC In this notebook, we create endpoint for external model - OpenAI andsetup Langchain to define the prompt template. We are testing one of the emails using Langchain based prompts. External models are third-party models hosted outside of Databricks. Supported by Model Serving, external models allow you to streamline the usage and management of various large language model (LLM) providers, such as OpenAI and Anthropic, within an organization. For this specific problem, we have picked OpenAI.
+# MAGIC In this notebook, we create endpoint for external model - OpenAI and setup Langchain to define the prompt template. We are testing one of the emails using Langchain based prompts. External models are third-party models hosted outside of Databricks. Supported by Model Serving, external models allow you to streamline the usage and management of various large language model (LLM) providers, such as OpenAI and Anthropic, within an organization. For this specific problem, we have picked OpenAI.
 # MAGIC
 # MAGIC https://docs.databricks.com/en/generative-ai/external-models/index.html
 # MAGIC
@@ -97,6 +97,8 @@ gateway = Databricks(
     host="https://" + spark.conf.get("spark.databricks.workspaceUrl"), 
     endpoint_name="Email-OpenAI-Completion-Endpoint",
     temperature=0.1,
+    max_tokens=1000,
+    allow_dangerous_deserialization=True,
 )
 
 # Build Prompt Template
@@ -105,7 +107,8 @@ Given the following email text, categorise whether the email is a job request, c
 
 The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises of the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary. Forth JSON attribute name "Reply" should be possibly email reply to the original email.
 
-Email summary begin here: {email_body}"""
+Email summary begin here DO NOT give answer except a JSON and No other text: {email_body}
+"""
 
 prompt = PromptTemplate(template=template, input_variables=["email_body"])
 
@@ -129,7 +132,11 @@ test_single_review = emails_silver.limit(1).select("email_body_clean").collect()
 
 # print(test_single_review)
 # Predict on the review
-response_string = llm_chain.invoke(test_single_review)
+response_string = llm_chain.run(test_single_review)
 
 # Print string
 print(response_string)
+
+# COMMAND ----------
+
+

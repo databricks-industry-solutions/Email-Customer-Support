@@ -64,4 +64,58 @@ print(client.delete_endpoint("Email-OpenAI-Completion-Endpoint"))
 
 # COMMAND ----------
 
+df=spark.read.format("delta").option("multiline","true").table("email_summary_llm_solution.email_llm.emails_foundational_silver")
 
+# COMMAND ----------
+
+from pyspark.sql.functions import col, explode
+
+display(df.select('message_id'), explode('summary_string')
+        .withColumn('category', col('summary_string.Category')
+        ))
+
+# COMMAND ----------
+
+from pyspark.sql.functions import col, explode, split
+
+display(df.select('message_id', explode(split('summary_string', ',')).alias('summary')).select('message_id', col('summary.Category').alias('category')))
+
+# COMMAND ----------
+
+from pyspark.sql.functions import from_json
+
+json_schema = "Category STRING, Sentiment STRING, Synposis STRING, Reply STRING"
+
+display(df.select('message_id', to_json('summary_string')))
+
+# COMMAND ----------
+
+val dfJSON = dfFromText.withColumn("jsonData",from_json(col("value"),schema))
+    .select("jsonData.*")
+
+# COMMAND ----------
+
+from pyspark.sql.types import StructType, StringType
+# Declare the schema
+json_schema = StructType() \
+    .add("Category", StringType(), True) \
+    .add("Sentiment", StringType(), True) \
+    .add("Synposis", StringType(), True) \
+    .add("Reply", StringType(), True)
+
+
+# COMMAND ----------
+
+from pyspark.sql.functions import from_json, col
+df_parsed=df.withColumn("email_response", from_json(col("summary_string"), json_schema, options={'multiLine':True})).select("*","email_response.*").drop("email_response")
+
+# COMMAND ----------
+
+display(df_parsed)
+
+# COMMAND ----------
+
+dfJSON = dfFromText.withColumn("jsonData",from_json(col("value"),schema))
+    .select("jsonData.*")
+dfJSON.printSchema()
+dfJSON.show(false)

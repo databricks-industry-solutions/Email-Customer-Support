@@ -90,7 +90,9 @@ def run_summarisation_pipeline(email_body):
     # Chat GPT LLM Model
     gateway = Databricks(
     host="https://" + url, 
-    endpoint_name="Email-OpenAI-Completion-Endpoint"
+    endpoint_name="Email-OpenAI-Completion-Endpoint",
+    max_tokens=1000,
+    allow_dangerous_deserialization=True,
     )
 
     # Build Prompt Template
@@ -99,7 +101,7 @@ def run_summarisation_pipeline(email_body):
 
     The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises of the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary. Forth JSON attribute name "Reply" should be possibly email reply to the original email.
 
-    Email summary begin here: {email_body}"""
+    Email summary begin here DO NOT give answer except a JSON and No other text: {email_body}"""
 
     prompt_template = PromptTemplate(template=prompt_template_string, input_variables=["email_body"])
 
@@ -108,7 +110,7 @@ def run_summarisation_pipeline(email_body):
 
     @retry(wait=wait_exponential(multiplier=10, min=10, max=1800), stop=stop_after_attempt(7))
     def _call_with_retry(email_body):
-        return chain.invoke(email_body)
+        return chain.run(email_body)
 
     try:
         summary_string = _call_with_retry(email_body)

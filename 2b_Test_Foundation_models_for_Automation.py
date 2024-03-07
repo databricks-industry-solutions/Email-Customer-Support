@@ -59,7 +59,7 @@ emails_silver=spark \
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Create Mistral-8X7b-instruct Completion endpoint for our solution
+# MAGIC ## Mistral-8X7b-instruct Completion endpoint for our solution
 # MAGIC
 # MAGIC We analysed multiple foundation models and Mistral is providing better results for the email automation in our case. However any foundation model can be used based on your preference and uniqueness of your data
 
@@ -116,3 +116,7 @@ test_single_review = emails_silver.limit(2).select("email_body_clean").collect()
 response = llm_chain.run(test_single_review)
 
 print(f"response.text:{response}")
+
+# COMMAND ----------
+
+
