@@ -5,11 +5,12 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Customer support email application is integrated with Databricks platform. The components such as Azure LogicApps drop data into Databricks Volumes or directly ingest into Bronze Delta tables. In this notebook, we are assuming that the raw emails are dropped in to Volume and we are ingesting data into Bronze Delta Table using Autoloader. 
+# MAGIC Customer support email application is integrated with Databricks platform. The components such as Azure LogicApps drop data into Databricks Volumes (https://docs.databricks.com/en/connect/unity-catalog/volumes.html) or directly ingest into Bronze Delta tables. In this notebook, we are assuming that the raw emails are dropped into Volume and we are ingesting data into Bronze Delta Table using Autoloader.
 # MAGIC
-# MAGIC Data used for this solution are fake emails being generated manually based on the real world emails received by electricity supplier for their business customers.
+# MAGIC Data used for this solution are fake emails being generated manually based on the real world emails received by electricity suppliers for their business customers.
 # MAGIC
 # MAGIC As we are using Autoloader, the solution can be implemented either using batch processing or stream processing.
+# MAGIC
 
 # COMMAND ----------
 
