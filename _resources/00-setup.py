@@ -48,3 +48,7 @@ config['schema_path'] = config['mount_point'] + '/schema'
 
 # DBTITLE 1,Add OpenAI Key through the secrets
 config['openai_api_key']=dbutils.secrets.get(scope = "email_openai_secret_scope", key = "openai_api_key")
+
+# COMMAND ----------
+
+

@@ -7,16 +7,17 @@
 # MAGIC %md
 # MAGIC *Prerequisite: Make sure to run 1_Ingest_Emails_Into_Lakehouse before running this notebook.*
 # MAGIC
-# MAGIC In this notebook, we create endpoint for external model - OpenAI and setup Langchain to define the prompt template. We are testing one of the emails using Langchain based prompts. External models are third-party models hosted outside of Databricks. Supported by Model Serving, external models allow you to streamline the usage and management of various large language model (LLM) providers, such as OpenAI and Anthropic, within an organization. For this specific problem, we have picked OpenAI.
+# MAGIC In this notebook, we create an endpoint for an external model - OpenAI and set up Langchain to define the prompt template. We are testing one of the emails using Langchain based prompts. External models are third-party models hosted outside of Databricks. Supported by Model Serving, external models allow you to streamline the usage and management of various large language model (LLM) providers, such as OpenAI and Anthropic, within an organization. For this specific problem, we have picked OpenAI.
 # MAGIC
 # MAGIC https://docs.databricks.com/en/generative-ai/external-models/index.html
 # MAGIC
 # MAGIC Key highlights for this notebook:
 # MAGIC - Use latest Machine Learning DBR for this notebook
-# MAGIC - Endpoint created in this notebook is used in the subsequent notebook for model serving
-# MAGIC - Endpoint can be viewed and validated using UI under the Serving section of Databricks pane.
+# MAGIC - Endpoints created in this notebook is used in the subsequent notebook for model serving
+# MAGIC - Endpoints can be viewed and validated using UI under the Serving section of Databricks pane.
 # MAGIC
-# MAGIC Please note that we are using Databricks secrets to securely store the OpenAI API key and is retrieved here to define the endpoint. We strongly recommend not to store the API token in the notebook.
+# MAGIC Please note that we are using Databricks secrets to securely store the OpenAI API key and is retrieved here to define the endpoint. We strongly recommend not to store the API token in the notebook. Please refer below document to set up secretes within Databricks
+# MAGIC https://docs.databricks.com/en/security/secrets/index.html
 
 # COMMAND ----------
 
@@ -82,9 +83,9 @@ client.create_endpoint(
 # MAGIC %md
 # MAGIC ## Setup Langchain for the external model
 # MAGIC
-# MAGIC We will setup Langchain to define the prompt template that will retrieve email Catagory, Sentiment, Synopsis and possible reply.
+# MAGIC We will setup Langchain to define the prompt template that will retrieve email Catagory, Sentiment, Synopsis and draft reply.
 # MAGIC
-# MAGIC The possible reply can be based on the templated and embedding can be used for it. However in this solution, we can not defined it.
+# MAGIC The draft reply can be based on the templates and embedding can be used for it. However in this solution, we can not defined it.
 
 # COMMAND ----------
 
@@ -93,12 +94,13 @@ from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain.llms import Databricks
 
+# Define OpenAI Gateway
 gateway = Databricks(
     host="https://" + spark.conf.get("spark.databricks.workspaceUrl"), 
     endpoint_name="Email-OpenAI-Completion-Endpoint",
     temperature=0.1,
     max_tokens=1000,
-    allow_dangerous_deserialization=True,
+    # allow_dangerous_deserialization=True,
 )
 
 # Build Prompt Template

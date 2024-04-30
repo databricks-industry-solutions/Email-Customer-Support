@@ -11,6 +11,11 @@
 
 # COMMAND ----------
 
+# MAGIC %sh
+# MAGIC cat /dbfs/FileStore/email_text_example.txt
+
+# COMMAND ----------
+
 if 'config' not in locals().keys():
   config = {}
 

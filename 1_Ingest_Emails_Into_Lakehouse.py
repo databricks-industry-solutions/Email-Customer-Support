@@ -45,3 +45,7 @@ _ = (
       .option('checkpointLocation', f"{config['checkpoint_path']}/emails_bronze")
       .toTable(config['table_emails_bronze'])
   )
+
+# COMMAND ----------
+
+
