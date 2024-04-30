@@ -38,6 +38,12 @@ spark.sql('USE {0}'.format(config['schema']))
 
 # COMMAND ----------
 
+
+# Create the volume
+spark.sql(f"CREATE VOLUME IF NOT EXISTS {config['volume']}")
+
+# COMMAND ----------
+
 config['mount_point'] ='/tmp/emails_summary'
  
 # file paths
@@ -48,6 +54,34 @@ config['schema_path'] = config['mount_point'] + '/schema'
 
 # DBTITLE 1,Add OpenAI Key through the secrets
 config['openai_api_key']=dbutils.secrets.get(scope = "email_openai_secret_scope", key = "openai_api_key")
+
+# COMMAND ----------
+
+# DBTITLE 1,Copy data from the git repo into volumes
+import os
+import requests
+
+# Define the URL of the file you want to download
+git_url = 'https://github.com/databricks-industry-solutions/Email-Customer-Support/raw/main/data/Email_Summarization_LLM_SOlution%20-%20sample_fake_data.csv'
+
+# Define the local path where you want to save the file
+local_path = config['vol_data_landing'] + '/email-samples.csv'
+
+
+# Check if the file exists
+if os.path.isfile(local_path):
+    print('file already exists')
+else:
+    # Download the file using requests library
+    response = requests.get(git_url)
+    # Save the downloaded file to the local path
+    with open(local_path, 'wb') as file:
+        file.write(response.content)
+
+# COMMAND ----------
+
+
+
 
 # COMMAND ----------
 
