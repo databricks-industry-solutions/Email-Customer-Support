@@ -107,7 +107,7 @@ gateway = Databricks(
 template = """
 Given the following email text, categorise whether the email is a job request, customer query or generic email where no action required. It should capture sentiment of the email as positive, negative or neutral. Also it should create a short summary of the email. In addition, it should draft possible reply to email.
 
-The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises of the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary. Forth JSON attribute name "Reply" should be possibly email reply to the original email.
+The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary. Forth JSON attribute name "Reply" should be possibly email reply to the original email.
 
 Email summary begin here DO NOT give answer except a JSON and No other text: {email_body}
 """

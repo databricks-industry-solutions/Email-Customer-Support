@@ -57,6 +57,11 @@ config['openai_api_key']=dbutils.secrets.get(scope = "email_openai_secret_scope"
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC ## Import the sample email data into Unity Catalog Volume for this solution
+
+# COMMAND ----------
+
 # DBTITLE 1,Copy data from the git repo into volumes
 import os
 import requests
