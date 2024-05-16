@@ -22,21 +22,6 @@
 
 # COMMAND ----------
 
-# MAGIC %md
-# MAGIC ## Install the SDK on a Databricks Notebook
-
-# COMMAND ----------
-
-# %pip install mlflow==2.9.0 langchain==0.0.344 databricks-sdk==0.12.0 
-
-# COMMAND ----------
-
-# !pip install databricks-genai-inference
-
-# dbutils.library.restartPython()
-
-# COMMAND ----------
-
 # MAGIC %run ./_resources/00-setup
 
 # COMMAND ----------
@@ -61,7 +46,9 @@ emails_silver=spark \
 # MAGIC %md
 # MAGIC ## Mistral-8X7b-instruct Completion endpoint for our solution
 # MAGIC
-# MAGIC We analysed multiple foundation models and Mistral is providing better results for the email automation in our case. However any foundation model can be used based on your preference and uniqueness of your data
+# MAGIC We analysed multiple foundation models and Mistral is providing better results for the email automation in our case. However any foundation model can be used based on your preference and uniqueness of your data. 
+# MAGIC
+# MAGIC We recommend using <a href="https://www.databricks.com/blog/announcing-mlflow-28-llm-judge-metrics-and-best-practices-llm-evaluation-rag-applications-part" target="_blank">LLM-as-a-judge</a>  to evaluate models. More documentation on LLM evaluation is available <a href="https://docs.databricks.com/en/mlflow/llm-evaluate.html" target="_blank">here</a> .
 
 # COMMAND ----------
 
