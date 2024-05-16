@@ -156,4 +156,4 @@ emails_silver_with_summary = (
 
 # COMMAND ----------
 
-
+display(spark.sql("SELECT * FROM "+ config['table_emails_silver_externalm']+ " LIMIT 10"))

@@ -90,4 +90,8 @@ else:
 
 # COMMAND ----------
 
+# dbutils.fs.rm(config['schema_path'], recurse=True)
+
+# COMMAND ----------
+
 

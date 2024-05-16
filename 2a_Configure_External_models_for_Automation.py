@@ -84,7 +84,7 @@ client.create_endpoint(
 # MAGIC
 # MAGIC We will setup Langchain to define the prompt template that will retrieve email Catagory, Sentiment, Synopsis and draft reply.
 # MAGIC
-# MAGIC The draft reply can be based on the templates and embedding can be used for it. However in this solution, we can not defined it.
+# MAGIC The draft reply can be based on the templates and embedding can be used for it. However in this solution, we have not defined it.
 
 # COMMAND ----------
 
@@ -99,14 +99,14 @@ gateway = Databricks(
     endpoint_name="Email-OpenAI-Completion-Endpoint",
     temperature=0.1,
     max_tokens=1000,
-    allow_dangerous_deserialization=True,
+    # allow_dangerous_deserialization=True,
 )
 
 # Build Prompt Template
 template = """
-Given the following email text, categorise whether the email is a job request, customer query or generic email where no action required. It should capture sentiment of the email as positive, negative or neutral. Also it should create a short summary of the email. In addition, it should draft possible reply to email.
+Given the following email text, categorise whether the email is a job request, customer query or generic email where no action required. It should capture sentiment of the email as positive, negative or neutral. Also it should create a short summary of the email. In addition, it should draft reply to email.
 
-The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary. Fourth JSON attribute name "Reply" should be possibly email reply to the original email.
+The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary. Fourth JSON attribute name "Reply" should be draft email reply to the original email.
 
 Email summary begin here DO NOT give answer except a JSON and No other text: {email_body}
 """

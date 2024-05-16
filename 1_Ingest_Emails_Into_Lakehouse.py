@@ -37,6 +37,10 @@ bronzeDF = (spark.readStream \
 
 # COMMAND ----------
 
+display(bronzeDF)
+
+# COMMAND ----------
+
 _ = (
   bronzeDF
     .writeStream

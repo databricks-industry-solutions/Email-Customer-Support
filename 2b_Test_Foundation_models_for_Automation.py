@@ -27,13 +27,13 @@
 
 # COMMAND ----------
 
-# MAGIC %pip install mlflow==2.9.0 langchain==0.0.344 databricks-sdk==0.12.0 
+# %pip install mlflow==2.9.0 langchain==0.0.344 databricks-sdk==0.12.0 
 
 # COMMAND ----------
 
-!pip install databricks-genai-inference
+# !pip install databricks-genai-inference
 
-dbutils.library.restartPython()
+# dbutils.library.restartPython()
 
 # COMMAND ----------
 
@@ -68,9 +68,9 @@ emails_silver=spark \
 # MAGIC %md
 # MAGIC ## Setup Langchain for the Foundation model
 # MAGIC
-# MAGIC We will setup Langchain to define the prompt template that will retrieve email Catagory, Sentiment, Synopsis and possible reply.
+# MAGIC We will setup Langchain to define the prompt template that will retrieve email Catagory, Sentiment, Synopsis and draft reply.
 # MAGIC
-# MAGIC The possible reply can be based on the templated and embedding can be used for it. However in this solution, we can not defined it.
+# MAGIC The draft reply can be based on the templates and embedding can be used for it. However in this solution, we have not defined it.
 
 # COMMAND ----------
 
@@ -90,9 +90,9 @@ chat_model = ChatDatabricks(endpoint="databricks-mixtral-8x7b-instruct", max_tok
 # Build Prompt Template
 template = """
 <s>[INST] <<SYS>>
-Given the following email text, categorise whether the email is a job request, customer query or generic email where no action required. It should capture sentiment of the email as positive, negative or neutral. Also it should create a short summary of the email. In addition, it should draft possible reply to email. the output of the questions should only be a JSON dictionary of dictionaries
+Given the following email text, categorise whether the email is a job request, customer query or generic email where no action required. It should capture sentiment of the email as positive, negative or neutral. Also it should create a short summary of the email. In addition, it should draft reply to email. the output of the questions should only be a JSON dictionary of dictionaries.
 
-The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary in 2-3 lines. Fourth JSON attribute name "Reply" should be possibly email reply to the original email.
+The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary in 2-3 lines. Fourth JSON attribute name "Reply" should be draft email reply to the original email.
 <</SYS>>
 Email summary begin here DO NOT give answer except a JSON and No other text : {email_body}  [/INST] """
 

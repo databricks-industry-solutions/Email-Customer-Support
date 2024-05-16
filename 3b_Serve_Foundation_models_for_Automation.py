@@ -7,20 +7,9 @@
 # MAGIC %md
 # MAGIC *Prerequisite: Make sure to run 1_Ingest_Emails_Into_Lakehouse before running this notebook.*
 # MAGIC
-# MAGIC In this notebook, we setup Langchain to serve the foundation model for Email Automation use case. 
+# MAGIC In this notebook, we set up Langchain to serve the foundation model for Email Automation use cases. 
 # MAGIC
-# MAGIC Key highlights for this notebook:
-# MAGIC - UDF is used for model serving in this notebook. For low latency requirements, there are API based options are available.
-
-# COMMAND ----------
-
-# MAGIC %pip install mlflow==2.9.0 langchain==0.0.344 databricks-sdk==0.12.0
-
-# COMMAND ----------
-
-!pip install databricks-genai-inference
-
-dbutils.library.restartPython()
+# MAGIC UDF is used for model serving in this notebook. For low latency requirements, the API based options are available.
 
 # COMMAND ----------
 
@@ -92,9 +81,9 @@ def run_summarisation_pipeline(email_body):
     # Build Prompt Template
     template = """
     <s>[INST] <<SYS>>
-    Given the following email text, categorise whether the email is a job request, customer query or generic email where no action required. It should capture sentiment of the email as positive, negative or neutral. Also it should create a short summary of the email. In addition, it should draft possible reply to email. the output of the questions should only be a JSON dictionary of dictionaries
+    Given the following email text, categorise whether the email is a job request, customer query or generic email where no action required. It should capture sentiment of the email as positive, negative or neutral. Also it should create a short summary of the email. In addition, it should draft reply to email. the output of the questions should only be a JSON dictionary of dictionaries
 
-    The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary in 2-3 lines. Fourth JSON attribute name "Reply" should be possibly email reply to the original email.
+    The output should be structured as a JSON dictionary of dictionaries. First attribute name is "Category" which categorises the email as three possible values - Job, Query or No Action. Second json attribute name is Sentiment with possible values - positive, negative or neutral. Third json attribute name is "Synopsis" which should capture short email summary in 2-3 lines. Fourth JSON attribute name "Reply" should be draft email reply to the original email.
     <</SYS>>
     Email summary begin here DO NOT give answer except a JSON and No other text : {email_body}  [/INST] """
 
@@ -145,3 +134,11 @@ emails_silver_with_summary = (
     .option("overwriteSchema", "true")
     .saveAsTable(config['table_emails_silver_foundationalm'])
 )
+
+# COMMAND ----------
+
+display(spark.sql("SELECT * FROM "+ config['table_emails_silver_foundationalm'] + " LIMIT 10"))
+
+# COMMAND ----------
+
+
