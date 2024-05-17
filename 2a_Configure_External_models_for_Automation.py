@@ -20,18 +20,6 @@
 
 # COMMAND ----------
 
-# MAGIC %md
-# MAGIC ## Install MLflow with external models support
-
-# COMMAND ----------
-
-# MAGIC %pip install mlflow[genai]>=2.9.0
-# MAGIC %pip install --upgrade mlflow
-# MAGIC %pip install --upgrade langchain
-# MAGIC dbutils.library.restartPython()
-
-# COMMAND ----------
-
 # MAGIC %run ./_resources/00-setup
 
 # COMMAND ----------
@@ -99,7 +87,6 @@ gateway = Databricks(
     endpoint_name="Email-OpenAI-Completion-Endpoint",
     temperature=0.1,
     max_tokens=1000,
-    # allow_dangerous_deserialization=True,
 )
 
 # Build Prompt Template

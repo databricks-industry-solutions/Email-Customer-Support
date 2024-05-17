@@ -15,17 +15,6 @@
 
 # COMMAND ----------
 
-# MAGIC %pip install mlflow==2.9.0 langchain==0.0.344 databricks-sdk==0.12.0
-
-# COMMAND ----------
-
-# MAGIC %pip install mlflow[genai]>=2.9.0
-# MAGIC %pip install --upgrade mlflow
-# MAGIC %pip install --upgrade langchain
-# MAGIC dbutils.library.restartPython()
-
-# COMMAND ----------
-
 # MAGIC %run ./_resources/00-setup
 
 # COMMAND ----------
@@ -92,7 +81,6 @@ def run_summarisation_pipeline(email_body):
     host="https://" + url, 
     endpoint_name="Email-OpenAI-Completion-Endpoint",
     max_tokens=1000,
-    allow_dangerous_deserialization=True,
     )
 
     # Build Prompt Template
@@ -157,3 +145,7 @@ emails_silver_with_summary = (
 # COMMAND ----------
 
 display(spark.sql("SELECT * FROM "+ config['table_emails_silver_externalm']+ " LIMIT 10"))
+
+# COMMAND ----------
+
+
