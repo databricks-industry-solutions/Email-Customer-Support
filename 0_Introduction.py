@@ -5,7 +5,9 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The purpose of this notebook is to introduce the automation of customer support through email. We use Large Langauge models (LLM) to automate the email response process. You may find this notebook at https://github.com/sachinpatilb/PersonalRepo/tree/master/EmailSummary
+# MAGIC The purpose of this notebook is to introduce the automation of customer support through email. We use Large Langauge models (LLM) to automate the email response process. 
+# MAGIC
+# MAGIC We recommend using DBR-LTS-ML-14.3 cluster for this solution accelerator.
 
 # COMMAND ----------
 
